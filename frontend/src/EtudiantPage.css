@@ -1,0 +1,11 @@
+.etudiant-container {
+    text-align: center;
+    margin-top: 50px;
+    background: #e8f5e9;
+    border-radius: 12px;
+    padding: 40px 0;
+    box-shadow: 0 2px 8px #a5d6a7;
+  }
+  .etudiant-title {
+    color: #2e7d32;
+  }

@@ -1,0 +1,11 @@
+.prof-container {
+    text-align: center;
+    margin-top: 50px;
+    background: #e3f2fd;
+    border-radius: 12px;
+    padding: 40px 0;
+    box-shadow: 0 2px 8px #90caf9;
+  }
+  .prof-title {
+    color: #1565c0;
+  }

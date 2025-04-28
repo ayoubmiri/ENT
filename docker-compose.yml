@@ -11,6 +11,7 @@ services:
       - "8080:8080"
     volumes:
       - keycloak_data:/opt/keycloak/data
+      - ./keycloak-theme:/opt/keycloak/themes
 
   cassandra:
     image: cassandra:5.0.4
@@ -18,14 +19,21 @@ services:
       - "9042:9042"
     volumes:
       - cassandra_data:/var/lib/cassandra
+    healthcheck:
+      test: ["CMD-SHELL", "cqlsh -e 'describe keyspaces'"]
+      interval: 5s
+      timeout: 10s
+      retries: 30
 
   fastapi:
     build: ./backend
     ports:
       - "8000:8000"
     depends_on:
-      - keycloak
-      - cassandra
+      keycloak:
+        condition: service_started
+      cassandra:
+        condition: service_healthy
     environment:
       - CASSANDRA_HOST=cassandra
       - KEYCLOAK_PUBLIC_KEY=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApdX1TFdikWny9HfrwyaEB6DchF2qZ/S9JSJgBYpzjRNMzt3VZGTtA8sFM6kBpbFTMVwpEy4Z4fLl8OUw07d7J8Sx6mNuT44UyiJLbfpS8YDRBcaEfMmARUkU9XnadlcdQ2B+kUFuGJr/R6xtlF7mVasXI+kCEFw01WXxTMPJdBolEhJeNMgUUSeZP5z1f9vnW3a3eYlJclXCZmmwhoKqk6ezHecyHNrSXPsVQVTpLvyYg7pDa3CFge/KFvcQD1+dXN3RLVKLc++hfYph4LRZ9BACjhfH/SdEWKA0sYlHXo7dMoOkOGIapsgmNS+y4q39ELH2aiXPqapzE/tXA56X4wIDAQAB

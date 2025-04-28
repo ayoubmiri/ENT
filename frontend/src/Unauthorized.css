@@ -1,0 +1,11 @@
+.unauthorized-container {
+    text-align: center;
+    margin-top: 50px;
+    background: #ffebee;
+    border-radius: 12px;
+    padding: 40px 0;
+    box-shadow: 0 2px 8px #ef9a9a;
+  }
+  .unauthorized-title {
+    color: #d32f2f;
+  }
