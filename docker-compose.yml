@@ -11,7 +11,6 @@ services:
       - "8080:8080"
     volumes:
       - keycloak_data:/opt/keycloak/data
-      - ./keycloak-theme:/opt/keycloak/themes
 
   cassandra:
     image: cassandra:5.0.4
@@ -24,6 +23,8 @@ services:
       interval: 5s
       timeout: 10s
       retries: 30
+    environment:
+      - CASSANDRA_CLUSTER_NAME=MyCluster
 
   fastapi:
     build: ./backend
@@ -36,7 +37,7 @@ services:
         condition: service_healthy
     environment:
       - CASSANDRA_HOST=cassandra
-      - KEYCLOAK_PUBLIC_KEY=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApdX1TFdikWny9HfrwyaEB6DchF2qZ/S9JSJgBYpzjRNMzt3VZGTtA8sFM6kBpbFTMVwpEy4Z4fLl8OUw07d7J8Sx6mNuT44UyiJLbfpS8YDRBcaEfMmARUkU9XnadlcdQ2B+kUFuGJr/R6xtlF7mVasXI+kCEFw01WXxTMPJdBolEhJeNMgUUSeZP5z1f9vnW3a3eYlJclXCZmmwhoKqk6ezHecyHNrSXPsVQVTpLvyYg7pDa3CFge/KFvcQD1+dXN3RLVKLc++hfYph4LRZ9BACjhfH/SdEWKA0sYlHXo7dMoOkOGIapsgmNS+y4q39ELH2aiXPqapzE/tXA56X4wIDAQAB
+      - KEYCLOAK_PUBLIC_KEY=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAo9hsZYzmEOZQukHVPJKEUflDoiyDG7eUjluLb+pwG6Q3Wsmpx4yp6hGa9f7Q4qFFW0IyvOg50VBd3nURDA8ZpmUTWLSOWdhUhJNLDjiw1TGA/9nE8jPrYHdZHywgDYIMeGshLvLPJnjwzyese4jjjZy8lJMwXT1Kvj4fmD3vZAy9imPSwvO99o2qPI9TlSebaBPpuYQVwuNQB8PXO0tpsayylOg94tOYhhXge5ug40LYO7PA1f2vXAbKukVtgNJnwN2nuIZI+2oONb7LN2HqycrFEFJdoRK4YJEq50jydTF2iMxmGmgKpB9+Ss2WBg6bMP6HgG15IU3lr/M1VOkBxQIDAQAB
       - KEYCLOAK_ISSUER=http://keycloak:8080/realms/mon-realm
       - KEYCLOAK_AUDIENCE=react-client
 
